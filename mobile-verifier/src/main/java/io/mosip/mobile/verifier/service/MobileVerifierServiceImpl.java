@@ -17,16 +17,16 @@ public class MobileVerifierServiceImpl implements MobileVerifierService {
             LoggerFactory.getLogger(MobileVerifierServiceImpl.class);
 
     @Override
-    public MobileVerifierResponseDto process(String referenceIdentityNumber, String phoneNumber) {
+    public MobileVerifierResponseDto process(String referenceIdentityNumber, String phone) {
 
         LOGGER.info("Mobile verification request received");
 
         try {
-            validateInputs(referenceIdentityNumber, phoneNumber);
+            validateInputs(referenceIdentityNumber, phone);
             LOGGER.info(
                     "Mobile verification successful | referenceIdentityNumber={} | phoneNumberEnding={}",
                     referenceIdentityNumber,
-                    phoneNumber
+                    phone
             );
 
             return new MobileVerifierResponseDto(
@@ -56,7 +56,7 @@ public class MobileVerifierServiceImpl implements MobileVerifierService {
         }
     }
 
-    private void validateInputs(String referenceIdentityNumber, String phoneNumber) {
+    private void validateInputs(String referenceIdentityNumber, String phone) {
 
         if (referenceIdentityNumber == null || referenceIdentityNumber.isBlank()) {
             throw new ValidationException(MobileVerifierErrorCodes.EMPTY_INPUT);
@@ -66,11 +66,11 @@ public class MobileVerifierServiceImpl implements MobileVerifierService {
             throw new ValidationException(MobileVerifierErrorCodes.INVALID_NATIONAL_ID);
         }
 
-        if (phoneNumber == null || phoneNumber.isBlank()) {
+        if (phone == null || phone.isBlank()) {
             throw new ValidationException(MobileVerifierErrorCodes.EMPTY_INPUT);
         }
 
-        if (!phoneNumber.matches("[6-9][0-9]{9}")) {
+        if (!phone.matches("[6-9][0-9]{9}")) {
             throw new ValidationException(MobileVerifierErrorCodes.INVALID_PHONE);
         }
     }
