@@ -70,7 +70,7 @@ public class MobileVerifierServiceImpl implements MobileVerifierService {
             throw new ValidationException(MobileVerifierErrorCodes.EMPTY_INPUT);
         }
 
-        if (!phone.matches("[6-9][0-9]{9}")) {
+        if (!phone.matches(""^\\+266[0-9]{8}$"")) {
             throw new ValidationException(MobileVerifierErrorCodes.INVALID_PHONE);
         }
     }
