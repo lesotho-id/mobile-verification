@@ -1,14 +1,13 @@
-package src.main.java.io.mosip.mobile.verifier.service;
+package io.mosip.mobile.verifier.service;
 
-//import io.mosip.mobile.verifier.dto.MobileVerifierResponseDto;
-//import io.mosip.mobile.verifier.exception.MobileVerifierErrorCodes;
-//import io.mosip.mobile.verifier.exception.ValidationException;
+
+import io.mosip.mobile.verifier.dto.MobileVerifierResponseDto;
+import io.mosip.mobile.verifier.exception.MobileVerifierErrorCodes;
+import io.mosip.mobile.verifier.exception.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import src.main.java.io.mosip.mobile.verifier.dto.MobileVerifierResponseDto;
-import src.main.java.io.mosip.mobile.verifier.exception.MobileVerifierErrorCodes;
-import src.main.java.io.mosip.mobile.verifier.exception.ValidationException;
+
 
 @Service
 public class MobileVerifierServiceImpl implements MobileVerifierService {
@@ -17,15 +16,15 @@ public class MobileVerifierServiceImpl implements MobileVerifierService {
             LoggerFactory.getLogger(MobileVerifierServiceImpl.class);
 
     @Override
-    public MobileVerifierResponseDto process(String referenceIdentityNumber, String phone) {
+    public MobileVerifierResponseDto process(String idNumber, String phone) {
 
         LOGGER.info("Mobile verification request received");
 
         try {
-            validateInputs(referenceIdentityNumber, phone);
+            validateInputs(idNumber, phone);
             LOGGER.info(
-                    "Mobile verification successful | referenceIdentityNumber={} | phoneNumberEnding={}",
-                    referenceIdentityNumber,
+                    "Mobile verification successful | idNumber={} | phoneNumberEnding={}",
+                    idNumber,
                     phone
             );
 
@@ -56,13 +55,13 @@ public class MobileVerifierServiceImpl implements MobileVerifierService {
         }
     }
 
-    private void validateInputs(String referenceIdentityNumber, String phone) {
+    private void validateInputs(String idNumber, String phone) {
 
-        if (referenceIdentityNumber == null || referenceIdentityNumber.isBlank()) {
+        if (idNumber == null || idNumber.isBlank()) {
             throw new ValidationException(MobileVerifierErrorCodes.EMPTY_INPUT);
         }
 
-        if (!referenceIdentityNumber.matches("[0-9]{12}")) {
+        if (!idNumber.matches("[0-9]{12}")) {
             throw new ValidationException(MobileVerifierErrorCodes.INVALID_NATIONAL_ID);
         }
 
@@ -81,7 +80,7 @@ public class MobileVerifierServiceImpl implements MobileVerifierService {
         if (MobileVerifierErrorCodes.EMPTY_INPUT.equals(errorCode)) {
             return "Input fields must not be empty";
         } else if (MobileVerifierErrorCodes.INVALID_NATIONAL_ID.equals(errorCode)) {
-            return "National referenceIdentityNumber must be 12 digits";
+            return "National idNumber must be 12 digits";
         } else if (MobileVerifierErrorCodes.INVALID_PHONE.equals(errorCode)) {
             return "Invalid phone number format";
         }
