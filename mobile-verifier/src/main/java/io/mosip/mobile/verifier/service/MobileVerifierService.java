@@ -1,10 +1,8 @@
-package src.main.java.io.mosip.mobile.verifier.service;
+package io.mosip.mobile.verifier.service;
 
-//import io.mosip.mobile.verifier.dto.MobileVerifierResponseDto;
-
-import src.main.java.io.mosip.mobile.verifier.dto.MobileVerifierResponseDto;
+import io.mosip.mobile.verifier.dto.MobileVerifierResponseDto;
 
 public interface MobileVerifierService {
-    MobileVerifierResponseDto process(String referenceIdentityNumber, String phone);
+    MobileVerifierResponseDto process(String idNumber, String phone);
 }
 
