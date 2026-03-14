@@ -4,13 +4,15 @@ public class VerifyRequestDto {
 
     private String idNumber;
     private String phone;
+    private Boolean isCitizen;
 
     public VerifyRequestDto() {
     }
 
-    public VerifyRequestDto(String idNumber, String phone) {
+    public VerifyRequestDto(String idNumber, String phone,Boolean isCitizen) {
         this.idNumber = idNumber;
         this.phone = phone;
+        this.isCitizen = isCitizen;
     }
 
     public String getIdNumber() {
@@ -27,5 +29,12 @@ public class VerifyRequestDto {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+    public Boolean getIsCitizen() {
+        return isCitizen;
+    }
+
+    public void setIsCitizen(Boolean isCitizen) {
+        this.isCitizen = isCitizen;
     }
 }

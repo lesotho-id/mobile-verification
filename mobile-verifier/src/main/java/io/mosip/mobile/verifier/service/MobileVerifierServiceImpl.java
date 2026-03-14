@@ -31,16 +31,17 @@ public class MobileVerifierServiceImpl implements MobileVerifierService {
             LoggerFactory.getLogger(MobileVerifierServiceImpl.class);
 
     @Override
-    public MobileVerifierResponseDto process(String idNumber, String phone) {
+    public MobileVerifierResponseDto process(String idNumber, String phone,Boolean isCitizen) {
 
         LOGGER.info("Mobile verification request received");
 
         try {
-            validateInputs(idNumber, phone);
+            validateInputs(idNumber, phone, isCitizen);
 
             VerifyRequestDto request = new VerifyRequestDto();
             request.setidNumber(idNumber);
             request.setPhone(phone);
+            request.setIsCitizen(isCitizen);
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -95,7 +96,7 @@ public class MobileVerifierServiceImpl implements MobileVerifierService {
         }
     }
 
-    private void validateInputs(String idNumber, String phone) {
+    private void validateInputs(String idNumber, String phone,Boolean isCitizen) {
 
         if (idNumber == null || idNumber.isBlank()) {
             throw new ValidationException(EMPTY_INPUT);
@@ -109,10 +110,14 @@ public class MobileVerifierServiceImpl implements MobileVerifierService {
             throw new ValidationException(EMPTY_INPUT);
         }
 
-        if (!phone.matches("^[0-9]{8}$")) {
+        if (!phone.matches("^[56][0-9]{7}$")) {
             throw new ValidationException(INVALID_PHONE);
-
         }
+
+        if (isCitizen == null) {
+            throw new ValidationException(EMPTY_INPUT);
+        }
+
 
     }
 
