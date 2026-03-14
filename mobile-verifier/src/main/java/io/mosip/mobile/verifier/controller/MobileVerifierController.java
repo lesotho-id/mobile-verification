@@ -21,8 +21,9 @@ public class MobileVerifierController {
     @GetMapping("/verify")
     public MobileVerifierResponseDto process(
             @RequestParam("idNumber") String idNumber,
-            @RequestParam("phone") String phone) {
+            @RequestParam("phone") String phone,
+            @RequestParam("isCitizen") Boolean isCitizen){
 
-        return identityService.process(idNumber, phone);
+        return identityService.process(idNumber, phone,isCitizen);
     }
 }
